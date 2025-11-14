@@ -10,7 +10,7 @@ import { getPost } from '@/sanity/queries'
 import { ChevronLeftIcon } from '@heroicons/react/16/solid'
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
-import { PortableText } from 'next-sanity'
+import { PortableText, type Any } from 'next-sanity'
 import { notFound } from 'next/navigation'
 
 export async function generateMetadata({
@@ -59,19 +59,22 @@ export default async function BlogPost({
               </div>
             )}
             {Array.isArray(post.categories) && (
-              <div className="flex flex-wrap gap-2">
-                {post.categories.map((category) => (
-                  <Link
-                    key={category.slug}
-                    href={`/blog?category=${category.slug}`}
-                    className="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500"
-                  >
-                    {category.title}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+  <div className="flex flex-wrap gap-2">
+    
+    {post.categories.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (category: any) => (
+      <Link
+        key={category.slug?.current || category.slug}
+        href={`/blog?category=${category.slug?.current || category.slug}`}
+        className="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500"
+      >
+        {category.title}
+      </Link>
+    ))}
+  </div>
+)}
+</div>
           <div className="text-gray-700">
             <div className="max-w-2xl xl:mx-auto">
               {post.mainImage && (
