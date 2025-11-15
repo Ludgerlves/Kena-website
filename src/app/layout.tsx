@@ -31,7 +31,7 @@ export default function RootLayout({
       </head>
       <body className="text-gray-950 antialiased">
         {children}
-        <SanityLive revalidateSyncTags={revalidateSyncTags} />
+        <SanityLive />
       </body>
     </html>
   )
